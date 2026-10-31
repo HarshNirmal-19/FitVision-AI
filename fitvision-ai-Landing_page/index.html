@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="lime">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FitVision AI — AI Vision. Better Form.</title>
+<style>
+:root {
+  /* Dynamic Theme Accents (Default Lime) */
+  --accent: #b7f34a;
+  --accent-contrast: #10140c;
+  --accent-glow: rgba(183, 243, 74, 0.28);
+  --accent-dim: #79a92b;
+
+  /* Theme Palette Definitions */
+  --lime: #b7f34a;
+  --lime-contrast: #10140c;
+  --lime-glow: rgba(183, 243, 74, 0.28);
+
+  --amber: #f5a623;
+  --amber-contrast: #150d02;
+  --amber-glow: rgba(245, 166, 35, 0.28);
+
+  --cyan: #00e5ff;
+  --cyan-contrast: #00151a;
+  --cyan-glow: rgba(0, 229, 255, 0.28);
+
+  /* Foundation Colors */
+  --site-bg-light: #f2f3ee;
+  --site-bg-dark: #090c0a;
+  --site-card-dark: #101512;
+  --site-card-hover: #141a16;
+  --site-border-dark: #1e2621;
+  --site-border-hover: #323e36;
+  --site-text-primary: #f2f5ee;
+  --site-text-muted: #8b958e;
+
+  /* Fonts & Radius */
+  --site-font-body: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --site-font-heading: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --site-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  --site-radius-pill: 999px;
+  --site-radius-card: 20px;
+  --site-radius-inner: 14px;
+  --transition-theme: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Theme Variations */
+html[data-theme="lime"] {
+  --accent: #b7f34a;
+  --accent-contrast: #10140c;
+  --accent-glow: rgba(183, 243, 74, 0.28);
+  --accent-dim: #79a92b;
+}
+
+html[data-theme="amber"] {
+  --accent: #f5a623;
+  --accent-contrast: #150d02;
+  --accent-glow: rgba(245, 166, 35, 0.28);
+  --accent-dim: #d48b11;
+}
+
+html[data-theme="cyan"] {
+  --accent: #00e5ff;
+  --accent-contrast: #00151a;
+  --accent-glow: rgba(0, 229, 255, 0.28);
+  --accent-dim: #00b8cc;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; font-family: var(--site-font-body); background: var(--site-bg-dark); color: var(--site-text-primary); }
+button, a { font: inherit; }
+a { color: inherit; text-decoration: none; }
+.site-root { width: 100%; min-height: 100vh; overflow: hidden; background-color: var(--site-bg-dark); color: var(--site-text-primary); }
+
+/* TOP / HERO SECTION */
+.top-section { position: relative; padding: 22px clamp(20px, 5vw, 74px) 54px; background: var(--site-bg-light); color: #111514; isolation: isolate; overflow: hidden; }
+.top-section::before { content: ""; position: absolute; inset: 0; z-index: -1; opacity: 0.55; background-image: radial-gradient(#a9afaa 1px, transparent 1px); background-size: 12px 12px; }
+
+/* NAVBAR */
+.nav { display: flex; align-items: center; justify-content: space-between; gap: 20px; max-width: 1320px; margin: 0 auto; }
+.brand { flex: 1 1 0%; display: flex; align-items: center; font-size: 20px; font-weight: 850; letter-spacing: -.04em; color: #111514; }
+.brand span { font-size: 20px; }
+.brand-accent { color: var(--accent); transition: color 0.3s ease; }
+.nav-links { flex: 0 0 auto; display: flex; align-items: center; justify-content: center; gap: clamp(10px, 1.8vw, 26px); margin: 0 auto; font-size: 15px; font-weight: 700; }
+.nav-links a { opacity: .72; color: #111514; transition: opacity .2s, color .2s; white-space: nowrap; }
+.nav-links a:hover { opacity: 1; color: #000; }
+
+/* Right action group: Theme switch + Visit button */
+.nav-actions { flex: 1 1 0%; display: flex; align-items: center; justify-content: flex-end; gap: 10px; }
+
+/* Theme Palette Switcher Pill (Matching User Reference Image) */
+.theme-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 8px;
+  background: #0d120f;
+  border: 1px solid rgba(16, 19, 18, 0.22);
+  border-radius: var(--site-radius-pill);
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+}
+.theme-btn {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 0;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+}
+.theme-btn[data-color="lime"] { background: #b7f34a; }
+.theme-btn[data-color="amber"] { background: #f5a623; }
+.theme-btn[data-color="cyan"] { background: #00e5ff; }
+
+.theme-btn:hover { transform: scale(1.15); }
+.theme-btn.active {
+  transform: scale(1.3);
+  box-shadow: 0 0 10px currentColor;
+}
+
+/* Header Action Pill Button */
+.pill-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border: 0;
+  border-radius: var(--site-radius-pill);
+  padding: 11px 20px;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform .2s, background .3s, color .3s, box-shadow .2s;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px var(--accent-glow);
+}
+.pill-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px var(--accent-glow); }
+.pill-btn.dark-btn { background: #080a09; color: white; box-shadow: none; }
+.pill-btn.dark-btn:hover { background: #222925; }
+.pill-btn-outline { background: rgba(255,255,255,.7); color: #101312; border: 1px solid rgba(16,19,18,.25); box-shadow: 0 2px 6px rgba(0,0,0,.04); }
+.pill-btn-outline:hover { background: #ffffff; border-color: #101312; transform: translateY(-2px); }
+
+/* HERO */
+.hero { position: relative; display: grid; place-items: center; min-height: 440px; max-width: 1320px; margin: 0 auto; text-align: center; }
+.hero-copy { position: relative; z-index: 2; max-width: 680px; padding: 42px 16px; }
+.hero-eyebrows { display: inline-flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(16,19,18,.17); border-radius: 99px; padding: 7px 14px; background: rgba(255,255,255,.62); font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: #101312; }
+.eyebrow-gallery { background: #ffffff !important; border: 1px solid rgba(16,19,18,.2); box-shadow: 0 2px 8px rgba(0,0,0,.05); color: #101312; transition: transform .2s, background .2s; }
+.eyebrow-gallery:hover { transform: translateY(-1px); background: #fdfdfd !important; }
+.live-dot { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 0 4px var(--accent-glow); transition: background .3s, box-shadow .3s; }
+h1 { margin: 22px 0 16px; font-family: var(--site-font-heading); font-size: clamp(42px, 6.4vw, 78px); line-height: .96; letter-spacing: -.075em; font-weight: 900; color: #111514; }
+h1 span { display: block; }
+.hero-copy p { max-width: 420px; margin: 0 auto 24px; color: #5e6661; font-size: 14px; line-height: 1.7; }
+.hero-actions { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 11px; }
+
+/* FLOATING CARDS */
+.float-card { position: absolute; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.6); border-radius: 25px; box-shadow: 0 18px 45px rgba(21,27,22,.13); transform: rotate(-7deg); }
+.float-card .emoji { font-size: clamp(38px, 5vw, 68px); filter: drop-shadow(0 8px 6px rgba(0,0,0,.16)); }
+.float-card small { position: absolute; left: 12px; bottom: 10px; font-size: 8px; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
+.float-a { width: 110px; height: 110px; left: 2%; top: 32%; background: #101514; color: var(--accent); transform: rotate(-9deg); transition: color 0.3s; }
+.float-b { width: 82px; height: 82px; left: 20%; top: 6%; background: var(--accent); transition: background 0.3s; }
+.float-c { width: 100px; height: 100px; right: 7%; top: 11%; background: #a88cff; transform: rotate(8deg); }
+.float-d { width: 116px; height: 116px; right: 4%; bottom: 4%; background: var(--accent); transform: rotate(6deg); transition: background 0.3s; }
+.float-e { width: 100px; height: 100px; left: 18%; bottom: 1%; background: #d9dcd7; transform: rotate(5deg); }
+.scan-line { position: absolute; width: 160px; height: 1px; background: linear-gradient(90deg, transparent, var(--accent), transparent); opacity: .8; transform: rotate(-28deg); transition: background 0.3s; }
+
+/* UNIFIED DARK SECTIONS ECOSYSTEM */
+.section-dark { position: relative; padding: 60px clamp(20px, 5vw, 74px) 64px; background: var(--site-bg-dark); color: var(--site-text-primary); overflow: hidden; border-top: 1px solid var(--site-border-dark); }
+.section-dark::before { content: ""; position: absolute; inset: 0; opacity: 0.35; background-image: radial-gradient(rgba(255,255,255,.2) .8px, transparent .8px); background-size: 14px 14px; pointer-events: none; }
+.section-inner { position: relative; max-width: 1320px; margin: 0 auto; z-index: 1; }
+.section-heading { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 30px; }
+.section-tag { display: inline-block; font-family: var(--site-font-mono); font-size: 11px; letter-spacing: .18em; font-weight: 800; text-transform: uppercase; margin-bottom: 10px; color: var(--accent); transition: color 0.3s; }
+h2 { margin: 0; font-size: clamp(28px, 3.8vw, 46px); line-height: 1.05; letter-spacing: -.05em; font-weight: 850; }
+.section-sub { margin: 12px 0 0; max-width: 540px; color: var(--site-text-muted); font-size: 13px; line-height: 1.6; }
+
+/* EXERCISE SCROLLER */
+.scroller-controls { display: flex; align-items: center; gap: 10px; }
+.scroller-btn { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: #131915; border: 1px solid var(--site-border-dark); color: var(--site-text-primary); font-size: 16px; cursor: pointer; transition: all .2s ease; }
+.scroller-btn:hover { background: var(--accent); color: var(--accent-contrast); border-color: var(--accent); transform: scale(1.05); }
+.scroller-btn:active { transform: scale(0.95); }
+.scroller-hint { font-size: 10px; color: var(--site-text-muted); font-weight: 700; letter-spacing: .06em; text-transform: uppercase; font-family: var(--site-font-mono); margin-right: 4px; }
+
+.exercise-scroller-wrap { position: relative; width: 100%; margin-top: 10px; }
+.exercise-scroller {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding: 6px 4px 22px 4px;
+  -webkit-overflow-scrolling: touch;
+  user-select: none;
+}
+.exercise-scroller::-webkit-scrollbar { height: 6px; }
+.exercise-scroller::-webkit-scrollbar-track { background: #101412; border-radius: 99px; }
+.exercise-scroller::-webkit-scrollbar-thumb { background: #28332c; border-radius: 99px; }
+.exercise-scroller::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+.exercise-card {
+  flex: 0 0 clamp(290px, 28vw, 360px);
+  scroll-snap-align: start;
+  border: 1px solid var(--site-border-dark);
+  border-radius: var(--site-radius-card);
+  padding: 8px;
+  background: var(--site-card-dark);
+  transition: transform .25s, border-color .25s, box-shadow .25s;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.exercise-card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: 0 16px 40px rgba(0,0,0,0.5), 0 0 20px var(--accent-glow); }
+.exercise-art { position: relative; display: flex; align-items: center; justify-content: center; height: 220px; border-radius: var(--site-radius-inner); overflow: hidden; background: #111613; }
+.exercise-art .exercise-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; z-index: 1; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.exercise-card:hover .exercise-img { transform: scale(1.06); }
+.exercise-art::before { content: ""; position: absolute; inset: 0; opacity: .22; z-index: 2; pointer-events: none; background-image: linear-gradient(rgba(0,0,0,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,.08) 1px, transparent 1px); background-size: 20px 20px; }
+.exercise-art .person { position: relative; z-index: 1; font-size: clamp(68px, 7vw, 105px); filter: drop-shadow(0 14px 6px rgba(0,0,0,.22)); }
+.art-squat { background: linear-gradient(145deg, #fa5d4e, #ff9a54); }
+.art-push { background: linear-gradient(145deg, #7a38f2, #25d9ef); }
+.art-bicep { background: linear-gradient(145deg, #ff5e62, #ff9966); }
+.art-shoulder { background: linear-gradient(145deg, #11998e, #38ef7d); }
+.art-lunge { background: linear-gradient(145deg, #f7971e, #ffd200); }
+.art-label { position: absolute; top: 12px; left: 12px; z-index: 4; padding: 6px 11px; border-radius: 99px; background: rgba(8,10,9,.86); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.14); color: white; font-size: 9px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; font-family: var(--site-font-mono); box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
+.pose-svg { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .85; z-index: 3; pointer-events: none; transition: opacity .3s ease; }
+.exercise-card:hover .pose-svg { opacity: 1; }
+.exercise-meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 15px 10px 12px; margin-top: auto; }
+.exercise-meta h3 { margin: 0; font-size: 16px; letter-spacing: -.04em; color: var(--site-text-primary); }
+.exercise-meta p { margin: 5px 0 0; color: var(--site-text-muted); font-size: 11px; }
+.arrow-btn { display: grid; place-items: center; width: 34px; height: 34px; flex: 0 0 auto; border: 1px solid var(--site-border-dark); border-radius: 50%; color: var(--accent); background: transparent; cursor: pointer; transition: background .2s, color .2s, border-color .2s; }
+.arrow-btn:hover { color: var(--accent-contrast); background: var(--accent); border-color: var(--accent); }
+
+/* VISUAL GALLERY SECTION (Fully Unified with Active Accent Color) */
+.gallery-section { background: #070908; }
+.gallery-header { text-align: center; max-width: 820px; margin: 0 auto 46px; }
+.gallery-header h2 { font-size: clamp(32px, 4.8vw, 56px); margin: 12px 0 16px; line-height: 1.05; }
+.gallery-header h2 em { font-style: normal; background: linear-gradient(90deg, var(--accent) 0%, #ffffff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.gallery-header p { color: var(--site-text-muted); font-size: 13px; max-width: 620px; margin: 0 auto; line-height: 1.6; }
+
+.gallery-card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+.img-card { position: relative; transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.img-card:hover { transform: translateY(-7px) scale(1.015); }
+.card-inner { position: relative; border: 1px solid var(--site-border-dark); border-radius: 16px; overflow: hidden; background: var(--site-card-dark); box-shadow: 0 16px 45px rgba(0,0,0,0.5); transition: border-color .3s, box-shadow .3s; }
+.img-card:hover .card-inner { border-color: var(--accent); box-shadow: 0 20px 50px rgba(0,0,0,0.65), 0 0 25px var(--accent-glow); }
+.img-card.card-active .card-inner { border-color: var(--accent); box-shadow: 0 20px 50px rgba(0,0,0,0.65), 0 0 24px var(--accent-glow); }
+.card-img-wrap { position: relative; height: 220px; background: #0c100e; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.card-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.card-img-wrap.img-fallback::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(45deg, #131a16 0, #131a16 1px, transparent 0, transparent 50%), repeating-linear-gradient(-45deg, #131a16 0, #131a16 1px, transparent 0, transparent 50%);
+  background-size: 20px 20px;
+}
+.card-img-wrap.img-fallback::after {
+  content: "POSE ANALYSIS // ACTIVE FRAME";
+  position: absolute;
+  font-family: var(--site-font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  background: rgba(8, 10, 9, 0.9);
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--accent);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  transition: color 0.3s, border-color 0.3s;
+}
+.card-scan-line { position: absolute; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--accent), transparent); opacity: 0.75; animation: scanline-sweep 3.5s linear infinite; pointer-events: none; transition: background 0.3s; }
+@keyframes scanline-sweep { 0% { top: 0; opacity: 0; } 10% { opacity: 0.85; } 90% { opacity: 0.85; } 100% { top: 100%; opacity: 0; } }
+
+.card-hud-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 10px 14px; background: linear-gradient(180deg, transparent 0%, rgba(6, 8, 7, 0.95) 100%); display: flex; align-items: center; justify-content: space-between; font-family: var(--site-font-mono); font-size: 9px; letter-spacing: 0.08em; border-top: 1px solid rgba(255, 255, 255, 0.06); z-index: 2; }
+.hud-tag { color: #c9d2cb; font-weight: 600; }
+.hud-status.ok { color: var(--accent); font-weight: 700; transition: color 0.3s; }
+.card-corner { position: absolute; width: 12px; height: 12px; border-color: var(--accent); border-style: solid; opacity: 0; transition: opacity 0.3s ease, border-color 0.3s ease; pointer-events: none; z-index: 3; }
+.img-card:hover .card-corner, .img-card.card-active .card-corner { opacity: 0.9; }
+.card-corner.tl { top: 8px; left: 8px; border-width: 1.5px 0 0 1.5px; }
+.card-corner.tr { top: 8px; right: 8px; border-width: 1.5px 1.5px 0 0; }
+.card-corner.bl { bottom: 8px; left: 8px; border-width: 0 0 1.5px 1.5px; }
+.card-corner.br { bottom: 8px; right: 8px; border-width: 0 1.5px 1.5px 0; }
+
+/* HOW IT WORKS SECTION */
+.video-showcase-card { margin-top: 24px; border: 1px solid var(--site-border-dark); border-radius: 22px; background: var(--site-card-dark); overflow: hidden; box-shadow: 0 24px 60px rgba(0,0,0,.4); }
+.video-bar { display: flex; align-items: center; justify-content: space-between; padding: 12px 18px; border-bottom: 1px solid var(--site-border-dark); background: #131915; font-size: 11px; }
+.video-status-tag { display: inline-flex; align-items: center; gap: 7px; color: var(--accent); font-weight: 800; text-transform: uppercase; font-size: 10px; letter-spacing: .08em; font-family: var(--site-font-mono); transition: color 0.3s; }
+.video-status-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 8px var(--accent); animation: pulse 2s infinite; transition: background 0.3s; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .4; } }
+.video-specs { color: var(--site-text-muted); font-size: 10px; display: flex; gap: 14px; font-family: var(--site-font-mono); }
+.video-stage { position: relative; width: 100%; min-height: 420px; background: #060807; display: grid; place-items: center; overflow: hidden; }
+.project-video { width: 100%; max-height: 520px; object-fit: contain; background: #000; display: block; }
+.video-hud-overlay { position: absolute; inset: 0; pointer-events: none; padding: 18px; display: flex; flex-direction: column; justify-content: space-between; }
+.hud-top { display: flex; justify-content: space-between; align-items: flex-start; }
+.hud-chip { background: rgba(12,15,13,.82); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,.14); border-radius: 8px; padding: 7px 12px; font-size: 10px; color: #fff; font-weight: 700; font-family: var(--site-font-mono); }
+.hud-chip span { color: var(--accent); transition: color 0.3s; }
+.hud-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
+.hud-badge-rep { background: var(--accent); color: var(--accent-contrast); font-weight: 900; font-size: 14px; padding: 8px 16px; border-radius: 999px; letter-spacing: -.02em; box-shadow: 0 4px 18px var(--accent-glow); font-family: var(--site-font-mono); transition: background 0.3s, color 0.3s; }
+.video-steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; }
+.step-item { background: var(--site-card-dark); border: 1px solid var(--site-border-dark); border-radius: 14px; padding: 20px; transition: border-color .2s; }
+.step-item:hover { border-color: var(--accent); }
+.step-num { display: inline-block; font-size: 10px; font-weight: 900; color: var(--accent); letter-spacing: .14em; text-transform: uppercase; font-family: var(--site-font-mono); margin-bottom: 8px; transition: color 0.3s; }
+.step-item h4 { margin: 0 0 6px; font-size: 14px; color: var(--site-text-primary); }
+.step-item p { margin: 0; font-size: 11px; line-height: 1.6; color: var(--site-text-muted); }
+
+/* FEATURES SECTION */
+.features-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 18px; }
+.feature-card { border: 1px solid var(--site-border-dark); border-radius: var(--site-radius-card); padding: 8px; background: var(--site-card-dark); transition: transform .25s, border-color .25s, box-shadow .25s; overflow: hidden; display: flex; flex-direction: column; }
+.feature-card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: 0 16px 40px rgba(0,0,0,0.5), 0 0 20px var(--accent-glow); }
+.feature-art { position: relative; display: grid; place-items: center; min-height: 220px; border-radius: var(--site-radius-inner); overflow: hidden; }
+.feature-art::before { content: ""; position: absolute; inset: 0; opacity: .3; background-image: linear-gradient(rgba(0,0,0,.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,.1) 1px, transparent 1px); background-size: 20px 20px; }
+.feature-art .feature-icon { position: relative; z-index: 1; font-size: clamp(60px, 6.5vw, 92px); filter: drop-shadow(0 14px 8px rgba(0,0,0,.25)); }
+.art-pose { background: linear-gradient(145deg, #0e5b72, #00b4d8); }
+.art-rep { background: linear-gradient(145deg, #1b4332, #52b788); }
+.art-history { background: linear-gradient(145deg, #7b2cbf, #b5179e); }
+.art-voice { background: linear-gradient(145deg, #d90429, #f72585); }
+.feature-label { position: absolute; top: 12px; left: 12px; z-index: 2; padding: 6px 10px; border-radius: 99px; background: rgba(8,10,9,.88); color: white; font-size: 9px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; font-family: var(--site-font-mono); }
+.feature-hud-tag { position: absolute; bottom: 12px; right: 12px; z-index: 2; padding: 5px 10px; border-radius: 8px; background: rgba(0,0,0,.75); backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,.18); color: var(--accent); font-size: 10px; font-weight: 800; font-family: var(--site-font-mono); transition: color 0.3s; }
+.feature-meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 15px 10px 12px; margin-top: auto; }
+.feature-meta h3 { margin: 0; font-size: 16px; letter-spacing: -.04em; color: var(--site-text-primary); }
+.feature-meta p { margin: 5px 0 0; color: var(--site-text-muted); font-size: 11px; line-height: 1.5; }
+
+/* CTA SECTION (Refined Cohesive Styling with Dynamic Active Accent) */
+.cta-section { position: relative; padding: 75px 22px; background: var(--accent); color: var(--accent-contrast); text-align: center; overflow: hidden; isolation: isolate; border-top: 1px solid var(--site-border-dark); transition: background 0.35s ease, color 0.35s ease; }
+.cta-section::before { content: ""; position: absolute; inset: 0; z-index: -1; opacity: .18; background-image: radial-gradient(#11150c 1.2px, transparent 1.2px); background-size: 16px 16px; }
+.cta-inner { position: relative; max-width: 860px; margin: 0 auto; z-index: 2; }
+.cta-section .section-tag { color: var(--accent-contrast); opacity: 0.85; }
+.cta-section h2 { max-width: 700px; margin: 0 auto 15px; font-size: clamp(35px, 5vw, 62px); letter-spacing: -.06em; line-height: 1.05; color: var(--accent-contrast); }
+.cta-section p { max-width: 490px; margin: 0 auto 24px; font-size: 13px; line-height: 1.7; color: var(--accent-contrast); opacity: 0.88; }
+.cta-section .pill-btn { background: #101312; color: white; box-shadow: 0 4px 18px rgba(0,0,0,0.3); }
+.cta-section .pill-btn:hover { background: #272d29; transform: translateY(-2px); }
+.cta-illustration-wrap { display: flex; align-items: center; justify-content: center; gap: 16px; margin: 28px auto 0; flex-wrap: wrap; }
+.cta-badge-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(17,21,12,.92); color: #fff; padding: 8px 14px; border-radius: 999px; font-size: 11px; font-weight: 800; box-shadow: 0 4px 16px rgba(0,0,0,.15); font-family: var(--site-font-mono); }
+.cta-badge-tag .badge-glow { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); transition: background 0.3s; }
+.cta-vector-art { width: 100%; max-width: 580px; height: 100px; margin: 15px auto 0; }
+.cta-vector-art line, .cta-vector-art circle { stroke: var(--accent-contrast); fill: var(--accent-contrast); opacity: 0.8; }
+
+/* DEVELOPER & RESEARCHER SECTION (Matching User Reference Image) */
+.developer-section {
+  padding: 80px clamp(20px, 5vw, 74px) 85px;
+  background: #080b09;
+}
+.developer-card {
+  position: relative;
+  background: #0d120f;
+  border: 1px solid #232d26;
+  border-radius: 28px;
+  padding: clamp(36px, 5vw, 60px) clamp(24px, 5vw, 56px);
+  max-width: 1080px;
+  margin: 0 auto;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+}
+.developer-card::before {
+  content: "";
+  position: absolute;
+  top: -120px;
+  right: -80px;
+  width: 440px;
+  height: 440px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+  pointer-events: none;
+  transition: background 0.35s ease;
+}
+.dev-header {
+  position: relative;
+  max-width: 720px;
+  margin-bottom: 38px;
+  z-index: 2;
+}
+.dev-title {
+  font-size: clamp(32px, 4.5vw, 50px);
+  font-weight: 850;
+  letter-spacing: -0.04em;
+  margin: 10px 0 16px;
+  line-height: 1.1;
+  color: #ffffff;
+}
+.dev-title em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--accent) 0%, #ffffff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: background 0.3s ease;
+}
+.dev-bio {
+  color: #9ea8a1;
+  font-size: 15px;
+  line-height: 1.7;
+  max-width: 660px;
+  margin: 0;
+}
+
+/* Social Grid (LinkedIn, GitHub, Twitter/X, Email) */
+.dev-social-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  z-index: 2;
+}
+.dev-social-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px;
+  background: #121815;
+  border: 1px solid #232e27;
+  border-radius: 14px;
+  color: #edf2ed;
+  font-weight: 700;
+  font-size: 14px;
+  transition: all .25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-decoration: none;
+}
+.dev-social-card:hover {
+  background: #17201b;
+  border-color: var(--accent);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5), 0 0 20px var(--accent-glow);
+  color: #ffffff;
+}
+.dev-social-card.active-link {
+  border-color: var(--accent);
+  background: #151d18;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 16px var(--accent-glow);
+}
+.dev-social-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.dev-social-icon {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  color: var(--accent);
+  transition: color 0.3s ease;
+}
+.dev-social-card:hover .dev-social-icon {
+  transform: scale(1.1);
+}
+.dev-social-arrow {
+  color: #727e76;
+  font-size: 14px;
+  transition: transform .2s, color .2s;
+}
+.dev-social-card:hover .dev-social-arrow {
+  transform: translate(2px, -2px);
+  color: var(--accent);
+}
+
+/* FOOTER */
+.footer {
+  position: relative;
+  padding: 38px clamp(20px, 5vw, 74px) 32px;
+  background: #060807;
+  color: #f3f5ef;
+  overflow: hidden;
+  border-top: 1px solid #1c241f;
+}
+.footer::before { content: ""; position: absolute; inset: 0; opacity: 0.2; background-image: radial-gradient(rgba(255,255,255,.3) .7px, transparent .7px); background-size: 12px 12px; }
+.footer-inner { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 24px; max-width: 1320px; margin: 0 auto; z-index: 1; }
+.footer-left { display: flex; flex-direction: column; gap: 6px; }
+.footer-brand { font-size: 20px; font-weight: 850; letter-spacing: -.04em; text-decoration: none; color: inherit; }
+.footer-note { margin: 0; color: var(--site-text-muted); font-size: 11px; line-height: 1.6; }
+.footer-signature { color: var(--site-text-muted); font-size: 11px; text-align: right; }
+.footer-signature strong { color: #f2f5ee; font-weight: 700; }
+.footer-bottom { position: relative; display: flex; justify-content: space-between; gap: 12px; max-width: 1320px; margin: 26px auto 0; padding-top: 18px; border-top: 1px solid #1a221d; color: #6e7972; font-size: 10px; z-index: 1; }
+
+/* TOAST */
+.toast { position: fixed; z-index: 20; left: 50%; bottom: 22px; transform: translate(-50%, 20px); opacity: 0; pointer-events: none; padding: 12px 18px; border-radius: 99px; background: #f4f6ef; color: #101312; box-shadow: 0 8px 35px rgba(0,0,0,.25); font-size: 12px; font-weight: 800; transition: .25s; }
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .dev-social-grid { grid-template-columns: repeat(2, 1fr); }
+  .gallery-card-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 760px) {
+  .nav-links { display: none; }
+  .hero { min-height: 440px; }
+  .float-a { left: -5%; top: 13%; width: 75px; height: 75px; border-radius: 18px; }
+  .float-b { left: 4%; top: auto; bottom: 8%; width: 66px; height: 66px; border-radius: 17px; }
+  .float-c { right: -3%; top: 10%; width: 70px; height: 70px; border-radius: 18px; }
+  .float-d { right: -4%; bottom: 4%; width: 76px; height: 76px; border-radius: 18px; }
+  .float-e { display: none; }
+  .hero-copy { padding: 50px 8px; }
+  .section-heading { align-items: start; flex-direction: column; }
+  .gallery-card-grid { grid-template-columns: 1fr; }
+  .features-grid { grid-template-columns: 1fr; }
+  .video-steps-grid { grid-template-columns: 1fr; }
+  .dev-social-grid { grid-template-columns: 1fr; }
+  .footer-inner { align-items: start; flex-direction: column; gap: 14px; }
+  .footer-signature { text-align: left; }
+  .footer-bottom { flex-direction: column; }
+}
+@media (prefers-color-scheme: dark) {
+  body, .site-root { background-color: var(--site-bg-dark); }
+}
+</style>
+</head>
+<body>
+<div class="site-root" id="top" data-sites-preview-theme="custom">
+
+  <!-- NAVBAR / HEADER SECTION -->
+  <section class="top-section">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="brand" href="#top" aria-label="FitVision AI home">
+        <span style="font-size:30px;">FitVision<span class="brand-accent" style="font-size:30px;"> AI.</span></span>
+      </a>
+
+      <div class="nav-links">
+        <a href="#top">Home</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="#exercises">Exercise</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#features">Features</a>
+        <a href="#developer">Developer</a>
+      </div>
+
+      <div class="nav-actions">
+        <!-- Interactive Theme Palette Switcher (Lime / Amber / Cyan) -->
+        <div class="theme-switch" role="radiogroup" aria-label="Accent color theme" title="Toggle Accent Color Theme">
+          <button class="theme-btn active" data-color="lime" aria-label="Electric Lime Theme" title="Electric Lime"></button>
+          <button class="theme-btn" data-color="amber" aria-label="Cyber Amber Theme" title="Cyber Amber"></button>
+          <button class="theme-btn" data-color="cyan" aria-label="Cyber Cyan Theme" title="Cyber Cyan"></button>
+        </div>
+
+        <a class="pill-btn" href="http://localhost:8501">Visit FitVision AI <span aria-hidden="true">↗</span></a>
+      </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <div class="hero">
+      <div class="float-card float-a"><span class="emoji">◎</span><small>Pose AI</small></div>
+      <div class="float-card float-b"><span class="emoji">🏋️</span></div>
+      <div class="float-card float-c"><span class="emoji">🦾</span></div>
+      <div class="float-card float-d"><span class="emoji">💪</span><small>Form check</small></div>
+      <div class="float-card float-e"><span class="emoji">🧍</span></div>
+      <div class="scan-line" style="left:17%;top:49%"></div>
+      <div class="scan-line" style="right:15%;top:60%;transform:rotate(24deg)"></div>
+      <div class="hero-copy">
+        <div class="hero-eyebrows">
+          <div class="eyebrow"><span class="live-dot"></span> Your real-time workout companion</div>
+        </div>
+        <h1><span>Your Workout.</span><span>Your Form.</span><span>With Ai Vision.</span></h1>
+        <h4><p>Starting your fitness journey? FitVision AI acts as your personal fitness coach, using your camera to track repetitions, monitor exercise posture, and guide you with instant AI-powered voice feedback.</p></h4>
+        <div class="hero-actions">
+          <a class="pill-btn dark-btn" href="#get-started">Try it Live <span aria-hidden="true">↗</span></a>
+          <a class="pill-btn pill-btn-outline" href="#how-it-works">See how it works ↓</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED EXERCISE SECTION (WITH SMOOTH HORIZONTAL SCROLLER) -->
+  <section class="section-dark" id="exercises">
+    <div class="section-inner">
+      <div class="section-heading">
+        <div>
+          <span class="section-tag">// START WITH THE FUNDAMENTALS</span>
+          <h2>Small moves. Better habits.</h2>
+          <p class="section-sub">A focused starter set of common exercises. Use the scroller to browse through movements and check details.</p>
+        </div>
+        
+        <!-- Scroller Navigation Controls -->
+        <div class="scroller-controls">
+          <span class="scroller-hint">Scroll to explore</span>
+          <button class="scroller-btn" id="exercise-prev" aria-label="Previous exercise">←</button>
+          <button class="scroller-btn" id="exercise-next" aria-label="Next exercise">→</button>
+        </div>
+      </div>
+
+      <!-- Horizontal Scroller Container -->
+      <div class="exercise-scroller-wrap">
+        <div class="exercise-scroller" id="exercise-scroller">
+          <!-- 1. Squats -->
+          <article class="exercise-card">
+            <div class="exercise-art art-squat">
+              <span class="art-label">01 / Lower body</span>
+              <img src="IMGs/workouts/squats.png" alt="Squats 3D Avatar" class="exercise-img" loading="lazy" />
+              <svg class="pose-svg" viewBox="0 0 300 240" fill="none" aria-hidden="true">
+                <path d="M142 62L148 95L110 98L85 102M148 95L156 142L132 165L124 205M156 142L176 166L182 205" stroke="white" stroke-width="2.8" stroke-linecap="round" stroke-dasharray="4 5"/>
+                <circle cx="140" cy="46" r="14" stroke="white" stroke-width="2.8"/>
+                <path d="M145 152 A 18 18 0 0 1 122 178" stroke="var(--accent)" stroke-width="2.5" stroke-dasharray="2 3"/>
+                <circle cx="132" cy="165" r="4.5" fill="var(--accent)"/>
+                <circle cx="85" cy="102" r="4" fill="white"/>
+                <circle cx="110" cy="98" r="4" fill="white"/>
+              </svg>
+            </div>
+            <div class="exercise-meta">
+              <div>
+                <h3>Squats</h3>
+                <p>Build a strong movement base</p>
+              </div>
+              <button class="arrow-btn" data-message="Squat tracking measures knee flexion, hip crease depth, and spinal posture in real-time." aria-label="Learn about squats">↗</button>
+            </div>
+          </article>
+
+          <!-- 2. Push-ups -->
+          <article class="exercise-card">
+            <div class="exercise-art art-push">
+              <span class="art-label">02 / Upper body</span>
+              <img src="IMGs/workouts/pushups.png" alt="Push-ups 3D Avatar" class="exercise-img" loading="lazy" />
+              <svg class="pose-svg" viewBox="0 0 300 240" fill="none" aria-hidden="true">
+                <path d="M68 118L102 124L96 156L94 186M102 124L156 134L208 142L258 158" stroke="white" stroke-width="2.8" stroke-linecap="round" stroke-dasharray="4 5"/>
+                <circle cx="62" cy="106" r="14" stroke="white" stroke-width="2.8"/>
+                <line x1="80" y1="130" x2="258" y2="158" stroke="var(--accent)" stroke-width="1.8" stroke-dasharray="2 4"/>
+                <circle cx="96" cy="156" r="4.5" fill="var(--accent)"/>
+                <circle cx="208" cy="142" r="4.5" fill="white"/>
+              </svg>
+            </div>
+            <div class="exercise-meta">
+              <div>
+                <h3>Push-ups</h3>
+                <p>Practise controlled upper-body reps</p>
+              </div>
+              <button class="arrow-btn" data-message="Push-up tracking validates chest-to-floor distance, plank rigidity, and elbow lockout." aria-label="Learn about push-ups">↗</button>
+            </div>
+          </article>
+
+          <!-- 3. Bicep Curls -->
+          <article class="exercise-card">
+            <div class="exercise-art art-bicep">
+              <span class="art-label">03 / Upper body & arms</span>
+              <img src="IMGs/workouts/bicep_curls.png" alt="Bicep Curls 3D Avatar" class="exercise-img" loading="lazy" />
+              <svg class="pose-svg" viewBox="0 0 300 240" fill="none" aria-hidden="true">
+                <path d="M150 48L150 102M150 68L120 100L114 74M150 68L180 100L186 74M150 102L136 158L132 205M150 102L164 158L168 205" stroke="white" stroke-width="2.8" stroke-linecap="round" stroke-dasharray="4 5"/>
+                <circle cx="150" cy="34" r="14" stroke="white" stroke-width="2.8"/>
+                <path d="M112 88 A 20 20 0 0 1 126 108" stroke="var(--accent)" stroke-width="2.5" stroke-dasharray="2 3"/>
+                <circle cx="120" cy="100" r="4.5" fill="var(--accent)"/>
+                <circle cx="180" cy="100" r="4.5" fill="var(--accent)"/>
+                <circle cx="114" cy="74" r="4" fill="white"/>
+                <circle cx="186" cy="74" r="4" fill="white"/>
+              </svg>
+            </div>
+            <div class="exercise-meta">
+              <div>
+                <h3>Bicep Curls</h3>
+                <p>Track elbow flexion & peak contraction</p>
+              </div>
+              <button class="arrow-btn" data-message="Bicep Curl tracking detects elbow angle from 160° extension to 45° peak contraction." aria-label="Learn about bicep curls">↗</button>
+            </div>
+          </article>
+
+          <!-- 4. Shoulder Press -->
+          <article class="exercise-card">
+            <div class="exercise-art art-shoulder">
+              <span class="art-label">04 / Upper body & shoulders</span>
+              <img src="IMGs/workouts/shoulder_press.png" alt="Shoulder Press 3D Avatar" class="exercise-img" loading="lazy" />
+              <svg class="pose-svg" viewBox="0 0 300 240" fill="none" aria-hidden="true">
+                <path d="M150 66L150 118M150 82L120 54L114 26M150 82L180 54L186 26M150 118L136 168L133 214M150 118L164 168L167 214" stroke="white" stroke-width="2.8" stroke-linecap="round" stroke-dasharray="4 5"/>
+                <circle cx="150" cy="50" r="14" stroke="white" stroke-width="2.8"/>
+                <line x1="114" y1="18" x2="114" y2="70" stroke="var(--accent)" stroke-width="1.8" stroke-dasharray="2 4"/>
+                <line x1="186" y1="18" x2="186" y2="70" stroke="var(--accent)" stroke-width="1.8" stroke-dasharray="2 4"/>
+                <circle cx="114" cy="26" r="4.5" fill="var(--accent)"/>
+                <circle cx="186" cy="26" r="4.5" fill="var(--accent)"/>
+              </svg>
+            </div>
+            <div class="exercise-meta">
+              <div>
+                <h3>Shoulder Press</h3>
+                <p>Master overhead pressing alignment</p>
+              </div>
+              <button class="arrow-btn" data-message="Shoulder Press tracking validates overhead symmetry, vertical path, and core stability." aria-label="Learn about shoulder press">↗</button>
+            </div>
+          </article>
+
+          <!-- 5. Lunges -->
+          <article class="exercise-card">
+            <div class="exercise-art art-lunge">
+              <span class="art-label">05 / Lower body</span>
+              <img src="IMGs/workouts/lunges.png" alt="Lunges 3D Avatar" class="exercise-img" loading="lazy" />
+              <svg class="pose-svg" viewBox="0 0 300 240" fill="none" aria-hidden="true">
+                <path d="M136 48L140 92M140 92L112 120L108 178M140 92L172 135L216 168" stroke="white" stroke-width="2.8" stroke-linecap="round" stroke-dasharray="4 5"/>
+                <circle cx="134" cy="34" r="14" stroke="white" stroke-width="2.8"/>
+                <path d="M124 135 A 18 18 0 0 1 106 156" stroke="var(--accent)" stroke-width="2.5" stroke-dasharray="2 3"/>
+                <circle cx="112" cy="120" r="4.5" fill="var(--accent)"/>
+                <circle cx="172" cy="135" r="4.5" fill="white"/>
+              </svg>
+            </div>
+            <div class="exercise-meta">
+              <div>
+                <h3>Lunges</h3>
+                <p>Balance unilateral leg strength</p>
+              </div>
+              <button class="arrow-btn" data-message="Lunge tracking measures front knee 90° angle and back knee drop for safe biomechanics." aria-label="Learn about lunges">↗</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISUAL GALLERY SECTION (Cohesively Styled with Active Accent Theme) -->
+  <section class="section-dark gallery-section" id="gallery">
+    <div class="section-inner">
+      <div class="gallery-header">
+        <span class="section-tag">// COMPUTER VISION IN ACTION</span>
+        <h2>Watch Your workout Form.<br /><em>getting Improved Under,</em><br/><em>AI Vision.</em></h2>
+      </div>
+
+      <!-- 6-Card HUD Telemetry Grid -->
+      <div class="gallery-card-grid">
+        <!-- Card 1 -->
+        <div class="img-card card-active">
+          <div class="card-inner">
+            <div class="card-img-wrap img-fallback">
+              <img src="./IMGs/1.login page fitvisionai.png" alt="Loging page screen" loading="lazy" onerror="this.parentElement.classList.add('img-fallback')" onload="this.parentElement.classList.remove('img-fallback')" />
+              <div class="card-scan-line"></div>
+              <div class="card-hud-overlay">
+                <span class="hud-status ok">FitVision ai user loging page </span>
+                <span class="hud-status ok">✓ OPTIMAL</span>
+              </div>
+            </div>
+            <div class="card-corner tl"></div>
+            <div class="card-corner tr"></div>
+            <div class="card-corner bl"></div>
+            <div class="card-corner br"></div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="img-card">
+          <div class="card-inner">
+            <div class="card-img-wrap img-fallback">
+              <img src="./IMGs/2.workout_config.png" alt="home page workout config screenshot" loading="lazy" onerror="this.parentElement.classList.add('img-fallback')" onload="this.parentElement.classList.remove('img-fallback')" />
+              <div class="card-scan-line"></div>
+              <div class="card-hud-overlay">
+                <span class="hud-status ok">Home page and Workout selection </span>
+                <span class="hud-status ok">✓ Select workout</span>
+              </div>
+            </div>
+            <div class="card-corner tl"></div>
+            <div class="card-corner tr"></div>
+            <div class="card-corner bl"></div>
+            <div class="card-corner br"></div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="img-card">
+          <div class="card-inner">
+            <div class="card-img-wrap img-fallback">
+              <img src="./IMGs/3.workout_dashboard fitvisionai.png" alt="Workout Dashboard screenshot" loading="lazy" onerror="this.parentElement.classList.add('img-fallback')" onload="this.parentElement.classList.remove('img-fallback')" />
+              <div class="card-scan-line"></div>
+              <div class="card-hud-overlay">
+                <span class="hud-status ok">Workout Session Interface</span>
+                <span class="hud-status ok">✓ start and end workout</span>
+              </div>
+            </div>
+            <div class="card-corner tl"></div>
+            <div class="card-corner tr"></div>
+            <div class="card-corner bl"></div>
+            <div class="card-corner br"></div>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="img-card">
+          <div class="card-inner">
+            <div class="card-img-wrap img-fallback">
+              <img src="./IMGs/4.pose detection fitvisionai.png" alt="Pose Detection screenshot" loading="lazy" onerror="this.parentElement.classList.add('img-fallback')" onload="this.parentElement.classList.remove('img-fallback')" />
+              <div class="card-scan-line"></div>
+              <div class="card-hud-overlay">
+                <span class="hud-status ok">Pose Detection - MediaPipe</span>
+                <span class="hud-status ok">✓ REP COMPLETE</span>
+              </div>
+            </div>
+            <div class="card-corner tl"></div>
+            <div class="card-corner tr"></div>
+            <div class="card-corner bl"></div>
+            <div class="card-corner br"></div>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="img-card">
+          <div class="card-inner">
+            <div class="card-img-wrap img-fallback">
+              <img src="./IMGs/5.workout completion fitvisionai.png" alt="Workout Completion AI response screenshot" loading="lazy" onerror="this.parentElement.classList.add('img-fallback')" onload="this.parentElement.classList.remove('img-fallback')" />
+              <div class="card-scan-line"></div>
+              <div class="card-hud-overlay">
+                <span class="hud-status ok">Ai Feedback - Workout completed</span>
+                <span class="hud-status ok">✓ STABLE (42s)</span>
+              </div>
+            </div>
+            <div class="card-corner tl"></div>
+            <div class="card-corner tr"></div>
+            <div class="card-corner bl"></div>
+            <div class="card-corner br"></div>
+          </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="img-card">
+          <div class="card-inner">
+            <div class="card-img-wrap img-fallback">
+              <img src="./IMGs/6.workout history fitvisionai.png" alt="Workout History Dashboard Screen" loading="lazy" onerror="this.parentElement.classList.add('img-fallback')" onload="this.parentElement.classList.remove('img-fallback')" />
+              <div class="card-scan-line"></div>
+              <div class="card-hud-overlay">
+                <span class="hud-status ok">Workout History</span>
+                <span class="hud-status ok">✓ Workout session records</span>
+              </div>
+            </div>
+            <div class="card-corner tl"></div>
+            <div class="card-corner tr"></div>
+            <div class="card-corner bl"></div>
+            <div class="card-corner br"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS SECTION (WITH VIDEO OF WORKING PROJECT) -->
+  <section class="section-dark how-it-works-section" id="how-it-works">
+    <div class="section-inner">
+      <div class="section-heading">
+        <div>
+          <span class="section-tag">// REAL-TIME SYSTEM ARCHITECTURE</span>
+          <h2>How FitVision AI Works</h2>
+        <h5><p class="section-sub">Watch how on-device computer vision analyzes your real-time webcam feed, maps 33 body keypoints, and provides instant coaching guidance.</p></h5>
+        </div>
+      </div>
+
+      <!-- Video Showcase Container -->
+      <div class="video-showcase-card">
+        <div class="video-bar">
+          <div class="video-status-tag">
+            <span class="video-status-dot"></span>
+            <span>Working Project Video Feed</span>
+          </div>
+          <div class="video-specs">
+            <span>MediaPipe BlazePose</span>
+            <span>30+ FPS</span>
+            <span>1080p Stream</span>
+          </div>
+        </div>
+
+        <div class="video-stage">
+          <video class="project-video" id="project-video" controls playsinline preload="metadata" poster="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='600' viewBox='0 0 1200 600'><rect width='100%25' height='100%25' fill='%23080c0a'/><circle cx='600' cy='300' r='60' fill='%23b7f34a'/><polygon points='590,275 625,300 590,325' fill='%23101312'/><text x='600' y='410' fill='%23e0e7e1' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle'>Click to Play FitVision AI Demo Video</text><text x='600' y='440' fill='%23707773' font-family='sans-serif' font-size='14' text-anchor='middle'>Add your project video file in videos/project.mp4 or stream live</text></svg>">
+            <source src="./videos/fitvision-demo.mp4" type="video/mp4" />
+            <source src="videos/demo.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+
+          <!-- Interactive HUD preview elements overlay -->
+          <div class="video-hud-overlay">
+            <div class="hud-top">
+              <div class="hud-chip">MODEL: <span>MediaPipe Pose (33 Landmarks)</span></div>
+              <div class="hud-chip">LATENCY: <span>~18ms</span></div>
+            </div>
+            <div class="hud-bottom">
+              <div class="hud-chip">FORM CHECK: <span style="color:var(--accent);">✓ Optimal Alignment</span></div>
+              <div class="hud-badge-rep">REP: 14</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 Step Process Breakdown -->
+      <div class="video-steps-grid">
+        <div class="step-item">
+          <span class="step-num">Step 01</span>
+          <h4>Set Up Any Camera</h4>
+          <p>Prop up your laptop, phone, or webcam so your full workout body frame is visible. No expensive wearables or calibration sensors needed.</p>
+        </div>
+        <div class="step-item">
+          <span class="step-num">Step 02</span>
+          <h4>Instant Pose Estimation</h4>
+          <p>FitVision AI tracks 33 skeletal coordinates in real-time, calculating exact elbow, hip, knee, and shoulder angles 30 times every second.</p>
+        </div>
+        <div class="step-item">
+          <span class="step-num">Step 03</span>
+          <h4>Audio Cues & Auto-Counting</h4>
+          <p>Receive spoken audio guidance ("Squat deeper", "Keep elbows tucked") and clean repetition counts once valid range of motion is achieved.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES SECTION (EXERCISE-STYLE CARDS) -->
+  <section class="section-dark features-section" id="features">
+    <div class="section-inner">
+      <div class="section-heading">
+        <div>
+          <span class="section-tag">// CORE CAPABILITIES</span>
+          <h2>Engineered for Better Form</h2>
+          <p class="section-sub">Powerful computer vision features engineered into simple, distraction-free cards so you can train with precision.</p>
+        </div>
+      </div>
+
+      <div class="features-grid">
+        <!-- 1. Realtime Pose Detection -->
+        <article class="feature-card">
+          <div class="feature-art art-pose">
+            <span class="feature-label">01 / Detection</span>
+            <span class="feature-icon">🎯</span>
+            <span class="feature-hud-tag">33 LANDMARKS</span>
+            <svg class="pose-svg" viewBox="0 0 300 240" fill="none" aria-hidden="true">
+              <circle cx="150" cy="50" r="16" stroke="rgba(255,255,255,0.6)" stroke-width="2"/>
+              <line x1="150" y1="66" x2="150" y2="125" stroke="rgba(255,255,255,0.6)" stroke-width="2"/>
+              <line x1="150" y1="85" x2="105" y2="115" stroke="rgba(255,255,255,0.6)" stroke-width="2"/>
+              <line x1="150" y1="85" x2="195" y2="115" stroke="rgba(255,255,255,0.6)" stroke-width="2"/>
+              <line x1="150" y1="125" x2="120" y2="190" stroke="rgba(255,255,255,0.6)" stroke-width="2"/>
+              <line x1="150" y1="125" x2="180" y2="190" stroke="rgba(255,255,255,0.6)" stroke-width="2"/>
+              <circle cx="105" cy="115" r="5" fill="var(--accent)"/>
+              <circle cx="195" cy="115" r="5" fill="var(--accent)"/>
+              <circle cx="120" cy="190" r="5" fill="var(--accent)"/>
+              <circle cx="180" cy="190" r="5" fill="var(--accent)"/>
+            </svg>
+          </div>
+          <div class="feature-meta">
+            <div>
+              <h3>Realtime Pose Detection</h3>
+              <p>Identifies 33 anatomical landmarks in every video frame at 30+ FPS with sub-millisecond angle tracking.</p>
+            </div>
+            <button class="arrow-btn" data-message="Realtime Pose Detection continuously measures joint coordinates with low latency." aria-label="Pose detection info">↗</button>
+          </div>
+        </article>
+
+        <!-- 2. Automatic Rep Counting -->
+        <article class="feature-card">
+          <div class="feature-art art-rep">
+            <span class="feature-label">02 / Counting</span>
+            <span class="feature-icon">🔢</span>
+            <span class="feature-hud-tag">AUTO-REPS: ON</span>
+            <svg class="pose-svg" viewBox="0 0 300 240" fill="none" aria-hidden="true">
+              <circle cx="150" cy="120" r="65" stroke="rgba(255,255,255,0.2)" stroke-width="6"/>
+              <path d="M150 55 A 65 65 0 1 1 95 155" stroke="var(--accent)" stroke-width="6" stroke-linecap="round"/>
+              <text x="150" y="128" fill="white" font-size="28" font-weight="900" text-anchor="middle" font-family="sans-serif">+1</text>
+            </svg>
+          </div>
+          <div class="feature-meta">
+            <div>
+              <h3>Automatic Rep Counting</h3>
+              <p>Validates eccentric and concentric movement phases to ensure honest, completed repetitions.</p>
+            </div>
+            <button class="arrow-btn" data-message="Automatic Rep Counting eliminates manual tracking so you can focus completely on your set." aria-label="Rep counting info">↗</button>
+          </div>
+        </article>
+
+        <!-- 3. AI Voice Feedback -->
+        <article class="feature-card">
+          <div class="feature-art art-voice">
+            <span class="feature-label">03 / Voice Coach</span>
+            <span class="feature-icon">🎙️</span>
+            <span class="feature-hud-tag">SPEECH SYNTHESIS</span>
+            <svg class="pose-svg" viewBox="0 0 300 240" fill="none" aria-hidden="true">
+              <path d="M110 120 Q120 90 130 120 T150 120 T170 120 T190 120" stroke="white" stroke-width="3" fill="none" opacity="0.6"/>
+              <path d="M90 120 Q105 70 120 120 T150 120 T180 120 T210 120" stroke="var(--accent)" stroke-width="2.5" fill="none" stroke-dasharray="3 3"/>
+            </svg>
+          </div>
+          <div class="feature-meta">
+            <div>
+              <h3>AI Voice Feedback</h3>
+              <p>Hands-free verbal cues alert you immediately to postural mistakes without breaking your focus.</p>
+            </div>
+            <button class="arrow-btn" data-message="AI Voice Feedback gives real-time audio corrections like 'Lower hips' or 'Tuck elbows'." aria-label="Voice feedback info">↗</button>
+          </div>
+        </article>
+
+        <!-- 4. Workout History -->
+        <article class="feature-card">
+          <div class="feature-art art-history">
+            <span class="feature-label">04 / Analytics</span>
+            <span class="feature-icon">📊</span>
+            <span class="feature-hud-tag">SESSION LOGS</span>
+            <svg class="pose-svg" viewBox="0 0 300 240" fill="none" aria-hidden="true">
+              <rect x="70" y="140" width="24" height="50" rx="4" fill="rgba(255,255,255,0.4)"/>
+              <rect x="110" y="115" width="24" height="75" rx="4" fill="rgba(255,255,255,0.5)"/>
+              <rect x="150" y="90" width="24" height="100" rx="4" fill="rgba(255,255,255,0.7)"/>
+              <rect x="190" y="65" width="24" height="125" rx="4" fill="var(--accent)"/>
+              <line x1="60" y1="195" x2="230" y2="195" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+            </svg>
+          </div>
+          <div class="feature-meta">
+            <div>
+              <h3>Workout History</h3>
+              <p>Logs total reps, accuracy percentage, time under tension, and session trends over time.</p>
+            </div>
+            <button class="arrow-btn" data-message="Workout History tracks long-term consistency, personal records, and form improvements." aria-label="Workout history info">↗</button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA SECTION (With Dynamic Accent Background) -->
+  <section class="cta-section" id="get-started">
+    <div class="cta-inner">
+      
+      <h2>New to Fitness Journey ?<br/>Train Smarter & Stronger,<br/>with FitVision AI</h2>
+    <h5><p>FitVision AI is being developed as a beginner-friendly fitness assistant. Experience AI-powered workout assistance that combines computer vision, exercise tracking, and voice coaching to help you make every movement count and help to make your form better.</p></h5>
+      <button class="pill-btn" id="start-button">Get ready to train <span aria-hidden="true">↗</span></button>
+
+      <!-- Catchy AI Vision Illustration Banner -->
+      <div class="cta-illustration-wrap">
+        <div class="cta-badge-tag">
+          <span class="badge-glow"></span>
+          <span>Computer Vision Active</span>
+        </div>
+        <div class="cta-badge-tag">
+          <span class="badge-glow"></span>
+          <span>98% Joint Form Accuracy</span>
+        </div>
+        <div class="cta-badge-tag">
+          <span class="badge-glow"></span>
+          <span>Instant Voice Coach</span>
+        </div>
+      </div>
+
+      <svg class="cta-vector-art" viewBox="0 0 580 100" fill="none" aria-hidden="true">
+        <line x1="20" y1="50" x2="560" y2="50" stroke-width="1.5" stroke-dasharray="6 6"/>
+        <circle cx="90" cy="50" r="28" stroke-width="1.8"/>
+        <circle cx="90" cy="50" r="14"/>
+        <line x1="90" y1="50" x2="210" y2="35" stroke-width="2.5"/>
+        <circle cx="210" cy="35" r="8"/>
+        <line x1="210" y1="35" x2="290" y2="65" stroke-width="2.5"/>
+        <circle cx="290" cy="65" r="10"/>
+        <line x1="290" y1="65" x2="380" y2="30" stroke-width="2.5"/>
+        <circle cx="380" cy="30" r="8"/>
+        <line x1="380" y1="30" x2="490" y2="50" stroke-width="2.5"/>
+        <circle cx="490" cy="50" r="28" stroke-width="1.8"/>
+        <circle cx="490" cy="50" r="14"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- DEVELOPER & RESEARCHER SECTION (Matching User Reference Image) -->
+  <section class="section-dark developer-section" id="developer">
+    <div class="section-inner">
+      <div class="developer-card">
+        <div class="dev-header">
+          <span class="section-tag">// DEVELOPER &amp; RESEARCHER</span>
+          <h2 class="dev-title">Built by Harsh Nirmal.<br /><em>Backed by Computer Vision.</em></h2>
+          <p class="dev-bio">
+            Engineered with computer vision, machine learning pose estimation, and real-time audio guidance. Open to opportunities in ML engineering, computer vision, and AI product roles.
+          </p>
+        </div>
+
+        <div class="dev-social-grid">
+          <!-- LinkedIn -->
+          <a href="https://www.linkedin.com/in/harsh-nirmal-4943503a1" target="_blank" rel="noopener noreferrer" class="dev-social-card active-link" aria-label="LinkedIn Profile">
+            <div class="dev-social-left">
+              <span class="dev-social-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20" aria-hidden="true">
+                  <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9h2.8v8.37h-2.8V10.9M7.86 6.54a1.63 1.63 0 1 0 0 3.25 1.63 1.63 0 0 0 0-3.25z"/>
+                </svg>
+              </span>
+              <span>LinkedIn</span>
+            </div>
+            <span class="dev-social-arrow">↗</span>
+          </a>
+
+          <!-- GitHub -->
+          <a href="https://github.com/HarshNirmal-19" target="_blank" rel="noopener noreferrer" class="dev-social-card" aria-label="GitHub Profile">
+            <div class="dev-social-left">
+              <span class="dev-social-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20" aria-hidden="true">
+                  <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
+                </svg>
+              </span>
+              <span>GitHub</span>
+            </div>
+            <span class="dev-social-arrow">↗</span>
+          </a>
+
+          <!-- Email Me -->
+          <a href="mailto:nirmalharsh63@gmail.com" class="dev-social-card" aria-label="Email Harsh Nirmal">
+            <div class="dev-social-left">
+              <span class="dev-social-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20" aria-hidden="true">
+                  <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                </svg>
+              </span>
+              <span>Email Me</span>
+            </div>
+            <span class="dev-social-arrow">↗</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER SECTION (Clean & Minimal) -->
+  <footer class="footer" id="footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <a class="footer-brand" href="#top" aria-label="FitVision AI home">
+          <span>FitVision<span class="brand-accent"> AI</span></span>
+        </a>
+        <p class="footer-note">Computer vision for better movement.<br/>A focused fitness-tech project in progress.</p>
+      </div>
+
+      <div class="footer-signature">
+        <span>Designed &amp; Developed by <strong>Harsh Nirmal</strong></span>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 FitVision AI · Built by Harsh Nirmal</span>
+      <span>AI Vision. Better Form.</span>
+    </div>
+  </footer>
+</div>
+
+<!-- TOAST NOTIFICATION -->
+<div class="toast" id="toast" role="status" aria-live="polite">FitVision AI is a project prototype.</div>
+
+<script>
+const toast = document.getElementById('toast');
+let toastTimer;
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+// Arrow button toasts
+document.querySelectorAll('[data-message]').forEach(button => {
+  button.addEventListener('click', () => showToast(button.dataset.message));
+});
+
+// CTA buttons
+const startBtn = document.getElementById('start-button');
+
+if (startBtn) {
+  startBtn.addEventListener('click', () => {
+    window.open('http://localhost:8501', '_blank');
+  });
+}
+
+// Dynamic Theme Palette Switcher (Lime / Amber / Cyan)
+const themeButtons = document.querySelectorAll('.theme-btn');
+const savedTheme = localStorage.getItem('fitvision-theme') || 'lime';
+
+function setTheme(color) {
+  document.documentElement.setAttribute('data-theme', color);
+  themeButtons.forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.color === color);
+  });
+  localStorage.setItem('fitvision-theme', color);
+}
+
+// Initialize active theme
+setTheme(savedTheme);
+
+themeButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const color = button.dataset.color;
+    setTheme(color);
+    showToast(`Accent theme switched to ${color.toUpperCase()}`);
+  });
+});
+
+// Exercise Scroller Controls
+const scroller = document.getElementById('exercise-scroller');
+const prevBtn = document.getElementById('exercise-prev');
+const nextBtn = document.getElementById('exercise-next');
+
+if (scroller && prevBtn && nextBtn) {
+  prevBtn.addEventListener('click', () => {
+    scroller.scrollBy({ left: -340, behavior: 'smooth' });
+  });
+  nextBtn.addEventListener('click', () => {
+    scroller.scrollBy({ left: 340, behavior: 'smooth' });
+  });
+
+  // Drag-to-scroll support for mouse users
+  let isDown = false;
+  let startX;
+  let scrollLeft;
+
+  scroller.addEventListener('mousedown', (e) => {
+    isDown = true;
+    startX = e.pageX - scroller.offsetLeft;
+    scrollLeft = scroller.scrollLeft;
+  });
+  scroller.addEventListener('mouseleave', () => { isDown = false; });
+  scroller.addEventListener('mouseup', () => { isDown = false; });
+  scroller.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - scroller.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    scroller.scrollLeft = scrollLeft - walk;
+  });
+}
+</script>
+</body>
+</html>
