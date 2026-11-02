@@ -21,7 +21,8 @@ class VideoProcessorClass(VideoProcessorBase):
         self._latest_metrics = None
         self._exercise_type = "Squats"
 
-        model_path = r"C:\MediaPipeTest\pose_landmarker_full.task"
+        APP_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        model_path = os.path.join(APP_DIR, "ml_models", "pose_landmarker_full.task")
         base_option = python.BaseOptions(model_asset_path=model_path)
 
         options = vision.PoseLandmarkerOptions(
